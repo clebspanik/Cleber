@@ -1,0 +1,10 @@
+plugins {
+    // Aplica o plugin de Java, necessário para compilar código Java
+    id 'java'
+    
+    // Aplica o plugin do Spring Boot, essencial para gerenciar dependências e criar o JAR executável
+    id 'org.springframework.boot' version '3.3.0' // Use a versão mais recente/estável (ex: 3.3.x)
+    
+    // Aplica o plugin de Gerenciamento de Dependências do Spring Boot
+    id 'io.spring.dependency-management' version '1.1.5' // Use a versão compatível
+}

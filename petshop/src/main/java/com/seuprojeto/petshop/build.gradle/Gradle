@@ -1,0 +1,71 @@
+
+Gradle {
+
+implementation 'org.springframework.boot:spring-boot-starter-validation' 
+
+}
+
+group = 'com.seuprojeto' // O pacote base do seu projeto (ex: com.seuprojeto.petshop)
+version = '0.0.1-SNAPSHOT'
+
+// Configura o projeto para usar a versão 17 do Java
+java {
+    sourceCompatibility = '17'
+
+    repositories {
+    mavenCentral()
+}
+
+Você não precisa criar o build.gradle do zero se estiver usando o Spring Initializr para iniciar o projeto, pois ele gera o arquivo automaticamente.No entanto, vou te mostrar o passo a passo para implementar e configurar um arquivo build.gradle básico para um projeto Spring Boot 3 (Java 17) usando a sintaxe Groovy DSL (a mais comum em projetos Java).📝 Passo a Passo: Implementando e Configurando o build.gradle1. Verifique se o Gradle Está Instalado (Opcional)Se você estiver usando o Gradle Wrapper (./gradlew ou gradlew.bat), o Gradle já está incluído no seu projeto e você pode pular esta etapa. Se não, você precisaria ter o Gradle instalado na sua máquina.2. Localize ou Crie o ArquivoO build.gradle deve estar na raiz do seu projeto. Se ele não existir (e seu projeto não for gerenciado por Gradle), crie um arquivo chamado build.gradle nesse diretório.3. Configuração Inicial: PluginsO bloco plugins define as funcionalidades básicas do seu projeto (ser um projeto Java, usar o Spring Boot, etc.).No Spring Boot 3/Java 17, você deve usar a sintaxe moderna de plugins:Gradleplugins {
+    // Aplica o plugin de Java, necessário para compilar código Java
+    id 'java'
+    
+    // Aplica o plugin do Spring Boot, essencial para gerenciar dependências e criar o JAR executável
+    id 'org.springframework.boot' version '3.3.0' // Use a versão mais recente/estável (ex: 3.3.x)
+    
+    // Aplica o plugin de Gerenciamento de Dependências do Spring Boot
+    id 'io.spring.dependency-management' version '1.1.5' // Use a versão compatível
+}
+4. Configuração do Projeto: Grupo, Versão e JavaDefina metadados e a versão do Java que você está usando (conforme o requisito, Java 17):Gradlegroup = 'com.seuprojeto' // O pacote base do seu projeto (ex: com.seuprojeto.petshop)
+version = '0.0.1-SNAPSHOT'
+
+// Configura o projeto para usar a versão 17 do Java
+java {
+    sourceCompatibility = '17'
+}
+5. Configuração de RepositóriosOs repositórios são onde o Gradle busca as bibliotecas (JARs). O repositório central para Java é o Maven Central.Gradlerepositories {
+    mavenCentral()
+}
+6. Definição das Dependências (O Mais Importante)Este é o bloco onde você lista todas as bibliotecas (Starters) que seu projeto precisa. Use a palavra-chave implementation para dependências de produção e runtimeOnly ou compileOnly para outras.Com base na sua lista de requisitos:RequisitoTipo de ConfiguraçãoDependência no build.gradleWeb (API REST)implementationorg.springframework.boot:spring-boot-starter-webData JPAimplementationorg.springframework.boot:spring-boot-starter-data-jpaValidação (Solução para seu erro)implementationorg.springframework.boot:spring-boot-starter-validationThymeleaf (Mantido)implementationorg.springframework.boot:spring-boot-starter-thymeleafPostgreSQLruntimeOnlyorg.postgresql:postgresqlDevtoolsdevelopmentOnlyorg.springframework.boot:spring-boot-devtoolsLombokannotationProcessor e compileOnlyorg.projectlombok:lombokTestestestImplementationorg.springframework.boot:spring-boot-starter-testGradledependencies {
+    // --- Dependências de Produção ---
+
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    
+    // DEPENDÊNCIA ESSENCIAL PARA O SEU PROBLEMA COM JAKARTA.VALIDATION
+    implementation 'org.springframework.boot:spring-boot-starter-validation' 
+
+    // --- Lombok (Configuração Especial) ---
+
+    // Lombok: para usar @Getter, @Setter, etc.
+    compileOnly 'org.projectlombok:lombok'
+    
+    // Lombok: processador de anotação
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // --- Dependências de Tempo de Execução (Runtime) ---
+
+    // PostgreSQL Driver
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // DevTools (para recarga rápida em desenvolvimento)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // --- Dependências de Teste ---
+    
+    // Spring Boot Test Starter
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+}
